@@ -3,8 +3,11 @@ import { Text } from '@/ui-lib';
 import PriceDisplay from '@/components/PriceDisplay';
 import type { RecentProduct } from '@/domains/product';
 
-type RecentPurchaseProductProps = RecentProduct;
-function RecentPurchaseProduct({ thumbnail, name, price }: RecentPurchaseProductProps) {
+interface RecentPurchaseProductProps {
+  product: RecentProduct;
+}
+function RecentPurchaseListItem({ product }: RecentPurchaseProductProps) {
+  const { thumbnail, name, price } = product;
   return (
     <Flex
       css={{
@@ -31,4 +34,4 @@ function RecentPurchaseProduct({ thumbnail, name, price }: RecentPurchaseProduct
   );
 }
 
-export default RecentPurchaseProduct;
+export default RecentPurchaseListItem;

@@ -9,6 +9,7 @@ import { useCurrencyStore } from '@/stores/currencyStore';
 import { useExchangeRate } from '@/hooks/queries/useExchangeRate';
 import { useEffect } from 'react';
 import type { CurrencyType } from '@/ui-lib';
+import { useCartStore } from '@/stores/cartStore';
 
 // TODO: 환율 갱신 시점 기획 확인 후 적용 필요
 export function Header() {
@@ -62,9 +63,10 @@ function BackButton() {
 
 function ShoppingCartButton() {
   const navigate = useNavigate();
-
+  const { getTotalQuantity } = useCartStore();
+  const totalQuantity = getTotalQuantity();
   return (
-    <Badge content={9} size="sm" cursor="pointer" onClick={() => navigate('/shopping-cart')}>
+    <Badge content={totalQuantity} size="sm" cursor="pointer" onClick={() => navigate('/shopping-cart')}>
       <ShoppingCartIcon size={22} />
     </Badge>
   );
