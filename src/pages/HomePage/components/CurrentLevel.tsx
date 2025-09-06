@@ -1,7 +1,7 @@
 import { Box, Flex } from 'styled-system/jsx';
 import { ProgressBar, Text } from '@/ui-lib';
 import { useGradeStatus } from '../hooks/useGradeStatus';
-import { GRADE_LABEL } from '@/models/user';
+import { GRADE_LABEL } from '@/domains/user';
 
 function CurrentLevel() {
   const { currentGrade, pointsToNextGrade, progressToNextGrade, isMaxGrade, currentPoints } = useGradeStatus();

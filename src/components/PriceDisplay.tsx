@@ -1,5 +1,5 @@
 import { useCurrencyStore } from '@/stores/currencyStore';
-import { CURRENCY_TYPE, type CurrencyType } from '@/models/common';
+import { CURRENCY_TYPE, type CurrencyType } from '@/constants/currency';
 
 const CURRENCY_CONFIG: Record<CurrencyType, { locale: Intl.LocalesArgument }> = {
   [CURRENCY_TYPE.USD]: {

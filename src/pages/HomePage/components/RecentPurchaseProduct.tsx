@@ -1,7 +1,7 @@
 import { Flex, styled } from 'styled-system/jsx';
 import { Text } from '@/ui-lib';
 import PriceDisplay from '@/components/PriceDisplay';
-import type { RecentProduct } from '@/models/product';
+import type { RecentProduct } from '@/domains/product';
 
 type RecentPurchaseProductProps = RecentProduct;
 function RecentPurchaseProduct({ thumbnail, name, price }: RecentPurchaseProductProps) {

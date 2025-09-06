@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { http } from '../../utils/http';
 import { queryKeys } from './queryKeys';
-import type { RecentProduct } from '@/models/product';
+import type { RecentProduct } from '@/domains/product';
 
 interface GetRecentProductListResponse {
   recentProducts: RecentProduct[];

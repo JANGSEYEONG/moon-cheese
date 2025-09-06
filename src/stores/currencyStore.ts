@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
-import { CURRENCY_TYPE, type CurrencyType } from '@/models/common';
+import { CURRENCY_TYPE, type CurrencyType } from '@/constants/currency';
 
 interface CurrencyStore {
   selectedCurrency: CurrencyType;

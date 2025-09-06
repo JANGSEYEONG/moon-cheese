@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { http } from '../../utils/http';
 import { queryKeys } from './queryKeys';
-import type { Grade } from '@/models/user';
+import type { Grade } from '@/domains/user';
 
 interface GetGradePointResponse {
   gradePointList: {
