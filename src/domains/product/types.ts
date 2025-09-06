@@ -1,3 +1,5 @@
+import type { ProductCategory } from './constants';
+
 export interface RecentProduct {
   id: number;
   thumbnail: string;
@@ -5,29 +7,16 @@ export interface RecentProduct {
   price: number;
 }
 
-interface BaseProduct {
+export interface Product {
   id: number;
   name: string;
+  category: ProductCategory;
   stock: number;
   price: number;
   description: string;
   detailDescription: string;
   images: string[];
   rating: number;
-}
-
-export interface CheeseProduct extends BaseProduct {
-  category: 'CHEESE';
-}
-
-export interface CrackerProduct extends BaseProduct {
-  category: 'CRACKER';
   isGlutenFree?: boolean;
-}
-
-export interface TeaProduct extends BaseProduct {
-  category: 'TEA';
   isCaffeineFree?: boolean;
 }
-
-export type Product = CheeseProduct | CrackerProduct | TeaProduct;
