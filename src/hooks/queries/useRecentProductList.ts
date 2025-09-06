@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { http } from '../../utils/http';
 import { queryKeys } from './queryKeys';
 
@@ -12,7 +12,7 @@ interface GetRecentProductListResponse {
 }
 
 export const useRecentProductList = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: queryKeys.recentProductList(),
     queryFn: () => http.get<GetRecentProductListResponse>('/api/recent/product/list'),
   });

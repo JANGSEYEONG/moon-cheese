@@ -3,21 +3,8 @@ import { useMe } from '@/hooks/queries/useMe';
 
 /** 현재 사용자의 등급 상태를 계산하는 훅  */
 export const useGradeStatus = () => {
-  const { data: gradePointData } = useGradePoint();
   const { data: me } = useMe();
-
-  // 로딩 상태 처리
-  if (!gradePointData?.gradePointList || !me) {
-    return {
-      currentGrade: null,
-      nextGrade: null,
-      pointsToNextGrade: 0,
-      progressToNextGrade: 0,
-      isMaxGrade: false,
-      isLoading: true,
-      currentPoints: 0,
-    };
-  }
+  const { data: gradePointData } = useGradePoint();
 
   const { point: currentPoints, grade: currentGrade } = me;
   const gradeList = gradePointData.gradePointList;
@@ -48,7 +35,6 @@ export const useGradeStatus = () => {
     pointsToNextGrade: Math.max(0, pointsToNextGrade),
     progressToNextGrade,
     isMaxGrade: nextGrade === null,
-    isLoading: false,
     currentPoints,
   };
 };
