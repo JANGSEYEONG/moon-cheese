@@ -10,4 +10,4 @@ export const GRADE_LABEL: Record<Grade, string> = {
   [GRADE.EXPLORER]: 'Explorer',
   [GRADE.PILOT]: 'Pilot',
   [GRADE.COMMANDER]: 'Commander',
-};
+} as const;

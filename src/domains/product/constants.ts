@@ -9,7 +9,7 @@ export const PRODUCT_CATEGORY_LABEL: Record<ProductCategory, string> = {
   [PRODUCT_CATEGORY.CHEESE]: '치즈',
   [PRODUCT_CATEGORY.CRACKER]: '크래커',
   [PRODUCT_CATEGORY.TEA]: '티',
-};
+} as const;
 
 export const PRODUCT_CATEGORY_WITH_ALL = {
   ALL: 'ALL',
@@ -20,4 +20,4 @@ export type ProductTabCategoryWithAll = (typeof PRODUCT_CATEGORY_WITH_ALL)[keyof
 export const PRODUCT_CATEGORY_LABEL_WITH_ALL: Record<ProductTabCategoryWithAll, string> = {
   ALL: '전체',
   ...PRODUCT_CATEGORY_LABEL,
-};
+} as const;

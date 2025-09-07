@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { http } from '@/utils/http';
-import type { DeliveryType } from '@/domains/delivery';
+import type { DeliveryMethod } from '@/domains/delivery';
 
 interface PostProductPurchaseRequest {
-  deliveryType: DeliveryType;
+  deliveryType: DeliveryMethod;
   totalPrice: number;
   items: {
     productId: number;
