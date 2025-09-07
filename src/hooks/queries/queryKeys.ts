@@ -10,6 +10,9 @@ export const queryKeys = {
   gradePoint: {
     all: () => [...queryKeys.all(), 'gradePoint'] as const,
   },
+  gradeShipping: {
+    all: () => [...queryKeys.all(), 'gradeShipping'] as const,
+  },
   product: {
     all: () => [...queryKeys.all(), 'product'] as const,
     list: () => [...queryKeys.product.all(), 'list'] as const,
