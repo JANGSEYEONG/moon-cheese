@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import { Grid } from 'styled-system/jsx';
 import { useProductList } from '@/hooks/queries/useProductList';
 import { PRODUCT_CATEGORY_WITH_ALL, type ProductTabCategoryWithAll } from '@/domains/product';
-import Product from './ProductListItem';
+import ProductListItem from './ProductListItem';
 
 interface ProductListProps {
   currentTab: ProductTabCategoryWithAll;
@@ -26,7 +26,7 @@ function ProductList({ currentTab }: ProductListProps) {
   return (
     <Grid gridTemplateColumns="repeat(2, 1fr)" rowGap={9} columnGap={4} p={5}>
       {filteredProducts.map(product => (
-        <Product product={product} onClick={goProductDetail} />
+        <ProductListItem product={product} onClick={goProductDetail} />
       ))}
     </Grid>
   );
