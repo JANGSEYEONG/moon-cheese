@@ -14,7 +14,18 @@ function ProductListItem({ product, onClick }: ProductListItemProps) {
   const { id, name, stock, images, description, rating, price, isCaffeineFree, isGlutenFree } = product;
 
   const { addItem, decreaseItem, getItemQuantity } = useCartStore();
-  const quantity = getItemQuantity(id);
+  const cartQuantity = getItemQuantity(id);
+
+  const canDecreaseQuantity = cartQuantity > 0;
+  const canIncreaseQuantity = cartQuantity < stock;
+
+  const decreaseQuantity = () => {
+    decreaseItem(id);
+  };
+
+  const increaseQuantity = () => {
+    addItem(product);
+  };
 
   return (
     <ProductItem.Root onClick={() => onClick(id)}>
@@ -31,9 +42,9 @@ function ProductListItem({ product, onClick }: ProductListItemProps) {
         {isGlutenFree && <ProductItem.FreeTag type="caffeine" />}
       </ProductItem.Meta>
       <Counter.Root>
-        <Counter.Minus onClick={() => decreaseItem(id)} disabled={quantity === 0} />
-        <Counter.Display value={quantity} />
-        <Counter.Plus onClick={() => addItem(product)} disabled={quantity >= stock} />
+        <Counter.Minus onClick={decreaseQuantity} disabled={!canDecreaseQuantity} />
+        <Counter.Display value={cartQuantity} />
+        <Counter.Plus onClick={increaseQuantity} disabled={!canIncreaseQuantity} />
       </Counter.Root>
     </ProductItem.Root>
   );

@@ -1,5 +1,6 @@
 import { Center, styled, VStack } from 'styled-system/jsx';
 
+// TODO: size 옵션 추가
 function LoadingSection() {
   return (
     <Center p={5} aspectRatio={1} bgColor="background.01_white">
