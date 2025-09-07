@@ -19,8 +19,9 @@ function ProductInfoSection({ product }: ProductInfoSectionProps) {
   const isInCart = cartQuantity > 0;
   const [selectedQuantity, setSelectedQuantity] = useState(cartQuantity);
 
+  const canAddCart = stock > 0;
   const canDecreaseQuantity = !isInCart && selectedQuantity > 0;
-  const canIncreaseQuantity = !isInCart && selectedQuantity < stock;
+  const canIncreaseQuantity = !isInCart && selectedQuantity < stock && canAddCart;
 
   const decreaseQuantity = () => {
     setSelectedQuantity(prev => prev - 1);
@@ -75,7 +76,7 @@ function ProductInfoSection({ product }: ProductInfoSectionProps) {
       <Spacing size={5} />
 
       {/* 장바구니 버튼 */}
-      <Button fullWidth color="primary" size="lg" onClick={handleCartButtonClick}>
+      <Button fullWidth color="primary" size="lg" onClick={handleCartButtonClick} disabled={!canAddCart}>
         {isInCart ? '장바구니에서 제거' : '장바구니 담기'}
       </Button>
     </styled.section>
