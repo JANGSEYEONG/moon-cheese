@@ -11,7 +11,7 @@ interface GetExchangeRateResponse {
 
 export const useExchangeRate = () => {
   return useSuspenseQuery({
-    queryKey: queryKeys.exchangeRate(),
+    queryKey: queryKeys.exchangeRate.all(),
     queryFn: () => http.get<GetExchangeRateResponse>('/api/exchange-rate'),
   });
 };

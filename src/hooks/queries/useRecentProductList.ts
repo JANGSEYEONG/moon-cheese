@@ -9,7 +9,7 @@ interface GetRecentProductListResponse {
 
 export const useRecentProductList = () => {
   return useSuspenseQuery({
-    queryKey: queryKeys.recentProductList(),
+    queryKey: queryKeys.product.recentList(),
     queryFn: () => http.get<GetRecentProductListResponse>('/api/recent/product/list'),
   });
 };

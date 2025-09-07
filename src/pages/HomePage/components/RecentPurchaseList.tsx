@@ -1,6 +1,6 @@
 import { useRecentProductList } from '@/hooks/queries/useRecentProductList';
 import { Flex } from 'styled-system/jsx';
-import RecentPurchaseProduct from './RecentPurchaseProduct';
+import RecentPurchaseProduct from './RecentPurchaseListItem';
 import { map, groupBy, sumBy } from 'lodash';
 
 function RecentPurchaseList() {
@@ -25,7 +25,7 @@ function RecentPurchaseList() {
       direction={'column'}
     >
       {groupedRecentProducts.map(recentProduct => (
-        <RecentPurchaseProduct {...recentProduct} />
+        <RecentPurchaseProduct product={recentProduct} />
       ))}
     </Flex>
   );

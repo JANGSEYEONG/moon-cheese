@@ -10,7 +10,7 @@ interface GetMeResponse {
 
 export const useMe = () => {
   return useSuspenseQuery({
-    queryKey: queryKeys.me(),
+    queryKey: queryKeys.me.all(),
     queryFn: () => http.get<GetMeResponse>('/api/me'),
   });
 };

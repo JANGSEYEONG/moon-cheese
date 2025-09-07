@@ -16,7 +16,7 @@ export const useCurrencyStore = create<CurrencyStore>()(
   devtools(
     persist(
       set => ({
-        selectedCurrency: CURRENCY_TYPE.KRW,
+        selectedCurrency: CURRENCY_TYPE.USD,
         exchangeRates: null,
         setSelectedCurrency: currency => set({ selectedCurrency: currency }),
         setExchangeRates: rates => set({ exchangeRates: rates }),

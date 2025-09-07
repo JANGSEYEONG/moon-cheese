@@ -12,7 +12,7 @@ interface GetGradePointResponse {
 
 export const useGradePoint = () => {
   return useSuspenseQuery({
-    queryKey: queryKeys.gradePoint(),
+    queryKey: queryKeys.gradePoint.all(),
     queryFn: () => http.get<GetGradePointResponse>('/api/grade/point'),
   });
 };

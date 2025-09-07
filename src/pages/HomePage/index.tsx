@@ -1,3 +1,4 @@
+import AsyncBoundary from '@/components/AsyncBoundary';
 import BannerSection from './components/BannerSection';
 import CurrentLevelSection from './components/CurrentLevelSection';
 import ProductListSection from './components/ProductListSection';
@@ -9,7 +10,9 @@ function HomePage() {
       <BannerSection />
       <CurrentLevelSection />
       <RecentPurchaseSection />
-      <ProductListSection />
+      <AsyncBoundary>
+        <ProductListSection />
+      </AsyncBoundary>
     </>
   );
 }

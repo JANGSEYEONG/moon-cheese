@@ -1,13 +1,17 @@
 import { useCurrencyStore } from '@/stores/currencyStore';
 import { CURRENCY_TYPE, type CurrencyType } from '@/constants/currency';
 
-const CURRENCY_CONFIG: Record<CurrencyType, { locale: Intl.LocalesArgument }> = {
-  [CURRENCY_TYPE.USD]: {
-    locale: 'en-US',
-  },
-  [CURRENCY_TYPE.KRW]: {
-    locale: 'ko-KR',
-  },
+const CURRENCY_FORMATTERS: Record<CurrencyType, Intl.NumberFormat> = {
+  [CURRENCY_TYPE.USD]: new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }),
+  [CURRENCY_TYPE.KRW]: new Intl.NumberFormat('ko-KR', {
+    style: 'currency',
+    currency: 'KRW',
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  }),
 } as const;
 
 interface PriceDisplayProps {
@@ -17,22 +21,15 @@ interface PriceDisplayProps {
 function PriceDisplay({ price }: PriceDisplayProps) {
   const { selectedCurrency, exchangeRates } = useCurrencyStore();
 
-  const convertAndFormatPrice = () => {
-    // 가격 변환 - exchangeRates에서 해당 통화의 비율 가져오기
-    const rate = exchangeRates?.[selectedCurrency] ?? 1;
-    const convertedPrice = price * rate;
+  // 가격 변환 - exchangeRates에서 해당 통화의 비율 가져오기
+  const rate = exchangeRates?.[selectedCurrency] ?? 1;
+  const convertedPrice = price * rate;
 
-    // 설정 가져오기
-    const config = CURRENCY_CONFIG[selectedCurrency];
+  // formatter 가져오기
+  const formatter = CURRENCY_FORMATTERS[selectedCurrency];
 
-    // 통화별 포맷팅
-    return convertedPrice.toLocaleString(config.locale, {
-      style: 'currency',
-      currency: selectedCurrency,
-    });
-  };
-
-  return convertAndFormatPrice();
+  // 통화별 포맷팅
+  return formatter.format(convertedPrice);
 }
 
 export default PriceDisplay;

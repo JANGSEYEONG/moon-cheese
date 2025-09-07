@@ -5,29 +5,15 @@ import Logo from '@/ui-lib/components/logo';
 import { useLocation, useNavigate } from 'react-router';
 import { Flex, styled } from 'styled-system/jsx';
 import { flex } from 'styled-system/patterns';
-import { useCurrencyStore } from '@/stores/currencyStore';
-import { useExchangeRate } from '@/hooks/queries/useExchangeRate';
-import { useEffect } from 'react';
-import type { CurrencyType } from '@/ui-lib';
+import { useCartStore } from '@/stores/cartStore';
+import { useCurrency } from '@/hooks/useCurrency';
 
-// TODO: 환율 갱신 시점 기획 확인 후 적용 필요
 export function Header() {
-  const { selectedCurrency, setSelectedCurrency, setExchangeRates } = useCurrencyStore();
-  const { data: exchangeRateData } = useExchangeRate();
   const location = useLocation();
 
   const isRootRoute = location.pathname === '/';
 
-  useEffect(() => {
-    if (exchangeRateData?.exchangeRate) {
-      setExchangeRates(exchangeRateData.exchangeRate);
-    }
-  }, [exchangeRateData, setExchangeRates]);
-
-  const handleCurrencyChange = (currency: CurrencyType) => {
-    setSelectedCurrency(currency);
-  };
-
+  const { selectedCurrency, changeCurrency } = useCurrency();
   return (
     <styled.header
       className={flex({
@@ -43,7 +29,7 @@ export function Header() {
     >
       {isRootRoute ? <Logo /> : <BackButton />}
       <Flex alignItems="center" gap={4}>
-        <CurrencyToggle value={selectedCurrency} onValueChange={handleCurrencyChange} />
+        <CurrencyToggle value={selectedCurrency} onValueChange={changeCurrency} />
         <ShoppingCartButton />
       </Flex>
     </styled.header>
@@ -62,9 +48,10 @@ function BackButton() {
 
 function ShoppingCartButton() {
   const navigate = useNavigate();
-
+  const { getTotalQuantity } = useCartStore();
+  const totalQuantity = getTotalQuantity();
   return (
-    <Badge content={9} size="sm" cursor="pointer" onClick={() => navigate('/shopping-cart')}>
+    <Badge content={totalQuantity} size="sm" cursor="pointer" onClick={() => navigate('/shopping-cart')}>
       <ShoppingCartIcon size={22} />
     </Badge>
   );
