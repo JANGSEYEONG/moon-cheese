@@ -5,6 +5,7 @@ type ErrorSectionProps = {
   onRetry?: () => void;
 };
 
+// TODO: size 옵션 추가
 function ErrorSection({ onRetry }: ErrorSectionProps) {
   return (
     <Center p={5} aspectRatio={1} bgColor="background.01_white">
