@@ -14,5 +14,7 @@ export const queryKeys = {
     all: () => [...queryKeys.all(), 'product'] as const,
     list: () => [...queryKeys.product.all(), 'list'] as const,
     recentList: () => [...queryKeys.product.all(), 'recentList'] as const,
+    byId: (id: number) => [...queryKeys.product.all(), 'byId', id] as const,
+    recommend: (id: number) => [...queryKeys.product.all(), 'recommend', id] as const,
   },
 };
