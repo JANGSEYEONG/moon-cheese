@@ -9,6 +9,7 @@ interface ShoppingCartListItemProps {
   product: Product;
 }
 
+// TODO: 장바구니에 직접 영향주는 ProductCounter 공통화 작업하기
 function ShoppingCartListItem({ product }: ShoppingCartListItemProps) {
   const { id, name, images, category, description, price, stock } = product;
 

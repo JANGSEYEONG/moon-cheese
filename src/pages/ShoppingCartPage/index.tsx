@@ -19,7 +19,10 @@ function ShoppingCartPage() {
         changeDeliveryMethod={changeDeliveryMethod}
         deliveryRateTable={deliveryRateTable}
       />
-      <CheckoutSection finalDeliveryCharge={deliveryRateTable[selectedDeliveryMethod]} />
+      <CheckoutSection
+        selectedDeliveryMethod={selectedDeliveryMethod}
+        finalDeliveryCharge={deliveryRateTable[selectedDeliveryMethod]}
+      />
     </>
   );
 }
