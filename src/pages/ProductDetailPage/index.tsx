@@ -18,7 +18,7 @@ function ProductDetailPage() {
   return (
     <>
       <ThumbnailSection images={images} />
-      <ProductInfoSection product={product} />
+      <ProductInfoSection key={product.id} product={product} />
 
       <Spacing size={2.5} />
 
