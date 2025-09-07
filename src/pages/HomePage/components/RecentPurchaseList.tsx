@@ -25,7 +25,7 @@ function RecentPurchaseList() {
       direction={'column'}
     >
       {groupedRecentProducts.map(recentProduct => (
-        <RecentPurchaseProduct product={recentProduct} />
+        <RecentPurchaseProduct key={recentProduct.id} product={recentProduct} />
       ))}
     </Flex>
   );

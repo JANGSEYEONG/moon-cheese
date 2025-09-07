@@ -22,7 +22,9 @@ function ProductListSection() {
       >
         <SubGNB.List>
           {Object.entries(PRODUCT_CATEGORY_LABEL_WITH_ALL).map(([key, value]) => (
-            <SubGNB.Trigger value={key}>{value}</SubGNB.Trigger>
+            <SubGNB.Trigger key={key} value={key}>
+              {value}
+            </SubGNB.Trigger>
           ))}
         </SubGNB.List>
       </SubGNB.Root>

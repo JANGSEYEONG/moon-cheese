@@ -26,7 +26,7 @@ function ProductList({ currentTab }: ProductListProps) {
   return (
     <Grid gridTemplateColumns="repeat(2, 1fr)" rowGap={9} columnGap={4} p={5}>
       {filteredProducts.map(product => (
-        <ProductListItem product={product} onClick={goProductDetail} />
+        <ProductListItem key={product.id} product={product} onClick={goProductDetail} />
       ))}
     </Grid>
   );

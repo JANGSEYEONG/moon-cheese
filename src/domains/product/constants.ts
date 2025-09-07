@@ -6,9 +6,9 @@ export const PRODUCT_CATEGORY = {
 export type ProductCategory = (typeof PRODUCT_CATEGORY)[keyof typeof PRODUCT_CATEGORY];
 
 export const PRODUCT_CATEGORY_LABEL: Record<ProductCategory, string> = {
-  CHEESE: '치즈',
-  CRACKER: '크래커',
-  TEA: '티',
+  [PRODUCT_CATEGORY.CHEESE]: '치즈',
+  [PRODUCT_CATEGORY.CRACKER]: '크래커',
+  [PRODUCT_CATEGORY.TEA]: '티',
 };
 
 export const PRODUCT_CATEGORY_WITH_ALL = {
