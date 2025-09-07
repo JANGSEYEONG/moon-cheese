@@ -18,7 +18,7 @@ type RecentProduct = {
 };
 
 const products = [...PRODUCTS];
-const defaultRecentProducts = convertToRecentProduct([products[0], products[1], products[2]]);
+const defaultRecentProducts = convertToRecentProduct([products[0], products[0], products[1], products[2]]);
 
 let userPoint = 0;
 let userGrade = 'EXPLORER';
