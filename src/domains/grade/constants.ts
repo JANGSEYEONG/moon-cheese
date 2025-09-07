@@ -4,10 +4,10 @@ export const GRADE = {
   PILOT: 'PILOT',
   COMMANDER: 'COMMANDER',
 } as const;
-export type Grade = 'EXPLORER' | 'PILOT' | 'COMMANDER';
+export type Grade = (typeof GRADE)[keyof typeof GRADE];
 
 export const GRADE_LABEL: Record<Grade, string> = {
-  EXPLORER: 'Explorer',
-  PILOT: 'Pilot',
-  COMMANDER: 'Commander',
-};
+  [GRADE.EXPLORER]: 'Explorer',
+  [GRADE.PILOT]: 'Pilot',
+  [GRADE.COMMANDER]: 'Commander',
+} as const;

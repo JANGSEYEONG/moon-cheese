@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 function InvalidPageSection() {
   const navigate = useNavigate();
 
-  const handleGoHome = () => {
+  const goHome = () => {
     navigate('/');
   };
 
@@ -18,7 +18,7 @@ function InvalidPageSection() {
           <Text variant="B2_Bold">잘못된 페이지 접근입니다</Text>
           <Text variant="C2_Regular">{'요청하신 페이지를 찾을 수 없어요.\n홈으로 돌아가서 다시 시도해주세요.'}</Text>
         </VStack>
-        <Button onClick={handleGoHome}>홈으로 가기</Button>
+        <Button onClick={goHome}>홈으로 가기</Button>
       </VStack>
     </Center>
   );

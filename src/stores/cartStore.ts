@@ -12,6 +12,7 @@ interface CartStore {
   addItem: (product: Product, quantity?: number) => void;
   decreaseItem: (productId: number, quantity?: number) => void;
   removeItem: (productId: number) => void;
+  removeAllItems: () => void;
   getItemQuantity: (productId: number) => number;
   getTotalQuantity: () => number;
   getTotalPrice: () => number;
@@ -64,6 +65,10 @@ export const useCartStore = create<CartStore>()(
           set(state => ({
             items: state.items.filter(item => item.id !== productId),
           }));
+        },
+
+        removeAllItems: () => {
+          set({ items: [] });
         },
 
         getItemQuantity: (productId: number) => {
