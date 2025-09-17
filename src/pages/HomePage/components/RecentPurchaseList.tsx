@@ -1,16 +1,18 @@
 import { useRecentProductList } from '@/hooks/queries/useRecentProductList';
 import { Flex } from 'styled-system/jsx';
 import RecentPurchaseProduct from './RecentPurchaseListItem';
-import { map, groupBy, sumBy } from 'lodash';
+import { groupBy, mapValues, sumBy } from 'es-toolkit';
 
 function RecentPurchaseList() {
   const {
     data: { recentProducts },
   } = useRecentProductList();
 
-  const groupedRecentProducts = map(groupBy(recentProducts, 'id'), products => ({
+  const productsById = groupBy(recentProducts, product => product.id);
+
+  const totalPricedProducts = mapValues(productsById, products => ({
     ...products[0],
-    price: sumBy(products, 'price'),
+    price: sumBy(products, product => product.price),
   }));
 
   return (
@@ -24,7 +26,7 @@ function RecentPurchaseList() {
       }}
       direction={'column'}
     >
-      {groupedRecentProducts.map(recentProduct => (
+      {Object.values(totalPricedProducts).map(recentProduct => (
         <RecentPurchaseProduct key={recentProduct.id} product={recentProduct} />
       ))}
     </Flex>

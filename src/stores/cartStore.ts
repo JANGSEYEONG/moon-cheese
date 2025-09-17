@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { sumBy } from 'lodash';
+import { sumBy } from 'es-toolkit';
 import type { Product } from '@/domains/product/types';
 
 export interface CartItem extends Product {
@@ -77,7 +77,7 @@ export const useCartStore = create<CartStore>()(
         },
 
         getTotalQuantity: () => {
-          return sumBy(get().items, 'quantity');
+          return sumBy(get().items, item => item.quantity);
         },
 
         getTotalPrice: () => {

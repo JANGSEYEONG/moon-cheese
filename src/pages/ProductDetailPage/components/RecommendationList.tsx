@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { HStack } from 'styled-system/jsx';
-import { keyBy, at, compact } from 'lodash';
+import { keyBy, pick } from 'es-toolkit';
 import RecommendationListItem from './RecommendationListItem';
 import { useRecommendProductIds } from '@/hooks/queries/useRecommendProductIds';
 import { useProductList } from '@/hooks/queries/useProductList';
@@ -22,13 +22,12 @@ function RecommendationList({ targetProductId }: RecommendationListProps) {
     navigate(`/product/${productId}`);
   };
 
-  const productMap = keyBy(products, 'id');
-  const mappedProducts = at(productMap, recommendProductIds);
-  const recommendedProducts = compact(mappedProducts);
+  const productsMap = keyBy(products, product => product.id);
+  const recommendProducts = Object.values(pick(productsMap, recommendProductIds));
 
   return (
     <HStack gap={1.5} overflowX="auto">
-      {recommendedProducts.map(product => (
+      {recommendProducts.map(product => (
         <RecommendationListItem key={product.id} product={product} onClick={goProductDetail} />
       ))}
     </HStack>
