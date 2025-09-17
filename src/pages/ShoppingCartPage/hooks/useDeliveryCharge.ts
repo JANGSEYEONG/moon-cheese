@@ -1,5 +1,6 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { DELIVERY_METHOD, DELIVERY_POLICY, type DeliveryMethod } from '@/domains/delivery';
-import { useMe } from '@/hooks/queries/useMe';
+import { getMeQueryOptions } from '@/hooks/queries/getMeQueryOptions';
 import { useCartStore } from '@/stores/cartStore';
 import { useState, useMemo } from 'react';
 
@@ -11,7 +12,7 @@ interface UseDeliveryChargeReturns {
 
 export function useDeliveryCharge(): UseDeliveryChargeReturns {
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState<DeliveryMethod>(DELIVERY_METHOD.EXPRESS);
-  const { data: user } = useMe();
+  const { data: user } = useSuspenseQuery(getMeQueryOptions());
   const totalPrice = useCartStore(state => state.getTotalPrice());
 
   const calculateDeliveryCharge = (method: DeliveryMethod): number => {
