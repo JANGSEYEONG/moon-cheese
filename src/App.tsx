@@ -8,12 +8,12 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <EnhancedToastProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <EnhancedToastProvider>
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </EnhancedToastProvider>
+      </EnhancedToastProvider>
+    </QueryClientProvider>
   );
 }
 

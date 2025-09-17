@@ -3,7 +3,7 @@ import PageLayout from '@/layout/PageLayout';
 import HomePage from './pages/HomePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
-import AsyncBoundary from './components/AsyncBoundary';
+import AsyncBoundaryWithQuery from './components/AsyncBoundaryWithQuery';
 
 const router = createBrowserRouter([
   {
@@ -21,9 +21,9 @@ const router = createBrowserRouter([
       {
         path: '/shopping-cart',
         element: (
-          <AsyncBoundary>
+          <AsyncBoundaryWithQuery>
             <ShoppingCartPage />
-          </AsyncBoundary>
+          </AsyncBoundaryWithQuery>
         ),
       },
     ],

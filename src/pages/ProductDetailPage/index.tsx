@@ -1,7 +1,7 @@
 import { Spacing } from '@/ui-lib';
 import RecommendationSection from './components/RecommendationSection';
 import { useParams } from 'react-router';
-import AsyncBoundary from '@/components/AsyncBoundary';
+import AsyncBoundaryWithQuery from '@/components/AsyncBoundaryWithQuery';
 import ProductDetailContent from './components/ProductDetailContent';
 import InvalidPageSection from '@/components/InvalidPageSection';
 
@@ -16,13 +16,13 @@ function ProductDetailPage() {
 
   return (
     <>
-      <AsyncBoundary>
+      <AsyncBoundaryWithQuery>
         <ProductDetailContent id={productId} />
-      </AsyncBoundary>
+      </AsyncBoundaryWithQuery>
       <Spacing size={2.5} />
-      <AsyncBoundary>
+      <AsyncBoundaryWithQuery>
         <RecommendationSection targetProductId={productId} />
-      </AsyncBoundary>
+      </AsyncBoundaryWithQuery>
     </>
   );
 }

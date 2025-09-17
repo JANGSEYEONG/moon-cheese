@@ -1,7 +1,7 @@
 import { Box, styled } from 'styled-system/jsx';
 import { Spacing, Text } from '@/ui-lib';
 import CurrentLevel from './CurrentLevel';
-import AsyncBoundary from '@/components/AsyncBoundary';
+import AsyncBoundaryWithQuery from '@/components/AsyncBoundaryWithQuery';
 
 function CurrentLevelSection() {
   return (
@@ -9,9 +9,9 @@ function CurrentLevelSection() {
       <Text variant="H1_Bold">현재 등급</Text>
       <Spacing size={4} />
       <Box bg="background.01_white" css={{ px: 5, py: 4, rounded: '2xl' }}>
-        <AsyncBoundary>
+        <AsyncBoundaryWithQuery>
           <CurrentLevel />
-        </AsyncBoundary>
+        </AsyncBoundaryWithQuery>
       </Box>
     </styled.section>
   );
