@@ -5,6 +5,13 @@ export interface RecentProduct {
   price: number;
 }
 
+export const PRODUCT_CATEGORY = {
+  CHEESE: 'CHEESE',
+  CRACKER: 'CRACKER',
+  TEA: 'TEA',
+} as const;
+export type ProductCategory = (typeof PRODUCT_CATEGORY)[keyof typeof PRODUCT_CATEGORY];
+
 interface ProductBase {
   id: number;
   name: string;
@@ -17,16 +24,16 @@ interface ProductBase {
 }
 
 interface CheeseProduct extends ProductBase {
-  category: 'CHEESE';
+  category: typeof PRODUCT_CATEGORY.CHEESE;
 }
 
 interface CrackerProduct extends ProductBase {
-  category: 'CRACKER';
+  category: typeof PRODUCT_CATEGORY.CRACKER;
   isGlutenFree?: boolean;
 }
 
 interface TeaProduct extends ProductBase {
-  category: 'TEA';
+  category: typeof PRODUCT_CATEGORY.TEA;
   isCaffeineFree?: boolean;
 }
 
