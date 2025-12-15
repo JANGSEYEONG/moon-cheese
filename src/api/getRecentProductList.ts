@@ -1,12 +1,8 @@
+import type { RecentProduct } from '@/models/product';
 import { http } from '@/utils/http';
 
 interface GetRecentProductListResponse {
-  recentProducts: {
-    id: number;
-    thumbnail: string;
-    name: string;
-    price: number;
-  }[];
+  recentProducts: RecentProduct[];
 }
 const getRecentProductList = async () => {
   return await http.get<GetRecentProductListResponse>('/api/recent/product/list');

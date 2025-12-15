@@ -4,6 +4,7 @@ import { PriceDisplay } from '@/components/PriceDisplay';
 import { getRecentProductListQueryOptions } from '@/api/getRecentProductList';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { groupBy, sumBy } from 'es-toolkit';
+import type { RecentProduct } from '@/models/product';
 
 function RecentPurchaseSection() {
   const {
@@ -33,28 +34,7 @@ function RecentPurchaseSection() {
         direction={'column'}
       >
         {productTotals.map(product => (
-          <Flex
-            css={{
-              gap: 4,
-            }}
-          >
-            <styled.img
-              src={product.thumbnail}
-              alt={product.name}
-              css={{
-                w: '60px',
-                h: '60px',
-                objectFit: 'cover',
-                rounded: 'xl',
-              }}
-            />
-            <Flex flexDir="column" gap={1}>
-              <Text variant="B2_Medium">{product.name}</Text>
-              <Text variant="H1_Bold">
-                <PriceDisplay price={product.totalPrice} />
-              </Text>
-            </Flex>
-          </Flex>
+          <RecentPurchaseItem key={product.id} product={product} />
         ))}
       </Flex>
     </styled.section>
@@ -62,3 +42,33 @@ function RecentPurchaseSection() {
 }
 
 export default RecentPurchaseSection;
+
+interface RecentPurchaseItemProps {
+  product: RecentProduct & { totalPrice: number };
+}
+function RecentPurchaseItem({ product }: RecentPurchaseItemProps) {
+  return (
+    <Flex
+      css={{
+        gap: 4,
+      }}
+    >
+      <styled.img
+        src={product.thumbnail}
+        alt={product.name}
+        css={{
+          w: '60px',
+          h: '60px',
+          objectFit: 'cover',
+          rounded: 'xl',
+        }}
+      />
+      <Flex flexDir="column" gap={1}>
+        <Text variant="B2_Medium">{product.name}</Text>
+        <Text variant="H1_Bold">
+          <PriceDisplay price={product.totalPrice} />
+        </Text>
+      </Flex>
+    </Flex>
+  );
+}
