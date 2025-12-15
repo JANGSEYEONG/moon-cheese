@@ -1,10 +1,8 @@
+import type { GradePoint } from '@/models/grade';
 import { http } from '@/utils/http';
 
 interface GetGradePointResponse {
-  gradePointList: {
-    type: 'EXPLORER' | 'PILOT' | 'COMMANDER';
-    minPoint: number;
-  }[];
+  gradePointList: GradePoint[];
 }
 
 const getGradePoint = async () => {
