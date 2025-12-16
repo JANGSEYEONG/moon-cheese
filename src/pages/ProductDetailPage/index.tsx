@@ -24,13 +24,7 @@ function ProductDetailPage() {
   return (
     <>
       <ThumbnailSection images={product.images} />
-      <ProductInfoSection
-        name={product.name}
-        category={product.category}
-        rating={product.rating}
-        price={product.price}
-        quantity={product.stock}
-      />
+      <ProductInfoSection product={product} />
 
       <Spacing size={2.5} />
 
