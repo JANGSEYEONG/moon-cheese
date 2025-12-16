@@ -9,3 +9,9 @@ export interface GradePoint {
   type: GradeType;
   minPoint: number;
 }
+
+export const SHIPPING_GRADE_TYPE = {
+  EXPRESS: 'EXPRESS',
+  PREMIUM: 'PREMIUM',
+} as const;
+export type ShippingGradeType = (typeof SHIPPING_GRADE_TYPE)[keyof typeof SHIPPING_GRADE_TYPE];
