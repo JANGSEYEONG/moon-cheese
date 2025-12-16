@@ -19,7 +19,6 @@ ProductDetailPage.loader = async function ({ params }: LoaderFunctionArgs) {
 
 function ProductDetailPage() {
   const { id } = useLoaderData<typeof ProductDetailPage.loader>();
-
   const { data: product } = useSuspenseQuery(getProductQueryOptions({ id }));
 
   return (
@@ -39,7 +38,7 @@ function ProductDetailPage() {
 
       <Spacing size={2.5} />
 
-      <RecommendationSection />
+      <RecommendationSection productId={product.id} />
     </>
   );
 }
