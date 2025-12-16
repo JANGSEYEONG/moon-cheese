@@ -1,13 +1,13 @@
 import { getProductListQueryOptions } from '@/api/getProductList';
+import { CartQuantityControl } from '@/components/CartQuantityControl';
 import { PriceDisplay } from '@/components/PriceDisplay';
 import { PRODUCT_CATEGORY, type Product } from '@/models/product';
-import { Counter, SubGNB, Text } from '@/ui-lib';
+import { SubGNB, Text } from '@/ui-lib';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { Box, Grid, styled } from 'styled-system/jsx';
 import ProductItem from './ProductItem';
-import { useCartStore } from '@/stores/useCartStore';
 
 function ProductListSection() {
   const [currentTab, setCurrentTab] = useState('all');
@@ -33,7 +33,7 @@ function ProductListSection() {
         {products
           .filter(product => currentTab === 'all' || product.category === currentTab)
           .map(product => (
-            <ProductCard key={product.id} product={product} bottomAddOn={<CartCounter product={product} />} />
+            <ProductCard key={product.id} product={product} bottomAddOn={<CartQuantityControl product={product} />} />
           ))}
       </Grid>
     </styled.section>
@@ -66,30 +66,5 @@ function ProductCard({ product, bottomAddOn }: ProductCardProps) {
         {bottomAddOn}
       </ProductItem.Root>
     </Link>
-  );
-}
-
-interface CartCounterProps {
-  product: Product;
-}
-
-function CartCounter({ product }: CartCounterProps) {
-  const { cart, increaseQuantity, decreaseQuantity } = useCartStore();
-  const cartItem = cart.find(item => item.productId === product.id);
-
-  return (
-    <Counter.Root
-      onClick={e => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-    >
-      <Counter.Minus onClick={() => decreaseQuantity(product.id)} disabled={!Boolean(cartItem?.quantity)} />
-      <Counter.Display value={cartItem?.quantity ?? 0} />
-      <Counter.Plus
-        onClick={() => increaseQuantity(product.id)}
-        disabled={product.stock <= (cartItem?.quantity ?? 0)}
-      />
-    </Counter.Root>
   );
 }

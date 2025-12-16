@@ -1,101 +1,80 @@
-import { Button, Counter, Spacing, Text } from "@/ui-lib";
-import { Divider, Flex, Stack, styled } from "styled-system/jsx";
-import ShoppingCartItem from "./ShoppingCartItem";
+import { getProductListQueryOptions } from '@/api/getProductList';
+import { CartQuantityControl } from '@/components/CartQuantityControl';
+import { PriceDisplay } from '@/components/PriceDisplay';
+import { Separated } from '@/components/Separated';
+import type { Product, ProductCategory } from '@/models/product';
+import { useCartStore } from '@/stores/useCartStore';
+import { Button, Spacing, Text, type TagType } from '@/ui-lib';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { intersectionWith } from 'es-toolkit';
+import { Divider, Flex, Stack, styled } from 'styled-system/jsx';
+import ShoppingCartItem from './ShoppingCartItem';
 
 function ShoppingCartSection() {
-    return (
-        <styled.section css={{ p: 5, bgColor: "background.01_white" }}>
-            <Flex justify="space-between">
-                <Text variant="H2_Bold">장바구니</Text>
-                <Button color={"neutral"} size="sm">
-                    전체삭제
-                </Button>
-            </Flex>
-            <Spacing size={4} />
-            <Stack
-                gap={5}
-                css={{
-                    p: 5,
-                    border: "1px solid",
-                    borderColor: "border.01_gray",
-                    rounded: "2xl",
-                }}
-            >
-                <ShoppingCartItem.Root>
-                    <ShoppingCartItem.Image
-                        src="/moon-cheese-images/cheese-1-1.jpg"
-                        alt="월레스의 오리지널 웬슬리데일"
-                    />
-                    <ShoppingCartItem.Content>
-                        <ShoppingCartItem.Info
-                            type="cheese"
-                            title="월레스의 오리지널 웬슬리데일"
-                            description="월레스의 오리지널 웬슬리데일"
-                            onDelete={() => {}}
-                        />
-                        <ShoppingCartItem.Footer>
-                            <ShoppingCartItem.Price>$12.99</ShoppingCartItem.Price>
-                            <Counter.Root>
-                                <Counter.Minus onClick={() => {}} disabled={true} />
-                                <Counter.Display value={1} />
-                                <Counter.Plus onClick={() => {}} />
-                            </Counter.Root>
-                        </ShoppingCartItem.Footer>
-                    </ShoppingCartItem.Content>
-                </ShoppingCartItem.Root>
+  const {
+    data: { products },
+  } = useSuspenseQuery(getProductListQueryOptions());
 
-                <Divider color="border.01_gray" />
+  const { cart, clearCart } = useCartStore();
 
-                <ShoppingCartItem.Root>
-                    <ShoppingCartItem.Image
-                        src="/moon-cheese-images/cheese-2-1.jpg"
-                        alt="월레스의 오리지널 웬슬리데일"
-                    />
-                    <ShoppingCartItem.Content>
-                        <ShoppingCartItem.Info
-                            type="cracker"
-                            title="월레스의 오리지널 웬슬리데일"
-                            description="월레스의 오리지널 웬슬리데일"
-                            onDelete={() => {}}
-                        />
-                        <ShoppingCartItem.Footer>
-                            <ShoppingCartItem.Price>$12.99</ShoppingCartItem.Price>
-                            <Counter.Root>
-                                <Counter.Minus onClick={() => {}} disabled={true} />
-                                <Counter.Display value={1} />
-                                <Counter.Plus onClick={() => {}} />
-                            </Counter.Root>
-                        </ShoppingCartItem.Footer>
-                    </ShoppingCartItem.Content>
-                </ShoppingCartItem.Root>
+  const cartProductIds = cart.map(item => item.productId);
+  const cartProducts = intersectionWith(
+    products,
+    cartProductIds,
+    (product, cartProductId) => product.id === cartProductId
+  );
 
-                <Divider color="border.01_gray" />
-
-                <ShoppingCartItem.Root>
-                    <ShoppingCartItem.Image
-                        src="/moon-cheese-images/cheese-3-1.jpg"
-                        alt="월레스의 오리지널 웬슬리데일"
-                    />
-                    <ShoppingCartItem.Content>
-                        <ShoppingCartItem.Info
-                            type="tea"
-                            title="월레스의 오리지널 웬슬리데일"
-                            description="월레스의 오리지널 웬슬리데일"
-                            onDelete={() => {}}
-                        />
-                        <ShoppingCartItem.Footer>
-                            <ShoppingCartItem.Price>$12.99</ShoppingCartItem.Price>
-                            <Counter.Root>
-                                <Counter.Minus onClick={() => {}} disabled={true} />
-                                <Counter.Display value={1} />
-                                <Counter.Plus onClick={() => {}} />
-                            </Counter.Root>
-                        </ShoppingCartItem.Footer>
-                    </ShoppingCartItem.Content>
-                </ShoppingCartItem.Root>
-            </Stack>
-        </styled.section>
-    );
+  return (
+    <styled.section css={{ p: 5, bgColor: 'background.01_white' }}>
+      <Flex justify="space-between">
+        <Text variant="H2_Bold">장바구니</Text>
+        <Button color={'neutral'} size="sm" onClick={() => clearCart()}>
+          전체삭제
+        </Button>
+      </Flex>
+      <Spacing size={4} />
+      <Stack
+        gap={5}
+        css={{
+          p: 5,
+          border: '1px solid',
+          borderColor: 'border.01_gray',
+          rounded: '2xl',
+        }}
+      >
+        <Separated by={<Divider color="border.01_gray" />}>
+          {cartProducts.map(product => (
+            <CartProductItem key={product.id} product={product} />
+          ))}
+        </Separated>
+      </Stack>
+    </styled.section>
+  );
 }
 
 export default ShoppingCartSection;
+
+function CartProductItem({ product }: { product: Product }) {
+  const { removeItem } = useCartStore();
+
+  return (
+    <ShoppingCartItem.Root>
+      <ShoppingCartItem.Image src={product.images[0]} alt={product.name} />
+      <ShoppingCartItem.Content>
+        <ShoppingCartItem.Info
+          category={product.category}
+          title={product.name}
+          description={product.description}
+          onDelete={() => removeItem(product.id)}
+        />
+        <ShoppingCartItem.Footer>
+          <ShoppingCartItem.Price>
+            <PriceDisplay price={product.price} />
+          </ShoppingCartItem.Price>
+
+          <CartQuantityControl product={product} />
+        </ShoppingCartItem.Footer>
+      </ShoppingCartItem.Content>
+    </ShoppingCartItem.Root>
+  );
+}
