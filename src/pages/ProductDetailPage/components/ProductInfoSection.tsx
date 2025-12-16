@@ -1,8 +1,8 @@
+import { CategoryTag } from '@/components/CategoryTag';
 import { PriceDisplay } from '@/components/PriceDisplay';
-import type { Product, ProductCategory } from '@/models/product';
+import type { Product } from '@/models/product';
 import { useCartStore } from '@/stores/useCartStore';
 import { Button, Counter, RatingGroup, Spacing, Text } from '@/ui-lib';
-import Tag, { type TagType } from '@/ui-lib/components/tag';
 import { useState } from 'react';
 import { Box, Divider, Flex, Stack, styled } from 'styled-system/jsx';
 
@@ -14,7 +14,7 @@ function ProductInfoSection({ product }: ProductInfoSectionProps) {
   return (
     <styled.section css={{ bg: 'background.01_white', p: 5 }}>
       <InfoBox product={product} />
-      <Spacing size={5} />=
+      <Spacing size={5} />
       <BuyBox product={product} />
     </styled.section>
   );
@@ -26,7 +26,7 @@ function InfoBox({ product }: { product: Product }) {
   return (
     <Box>
       <Stack gap={2}>
-        <Tag type={getCategoryTagType(product.category)} />
+        <CategoryTag category={product.category} />
         <Text variant="B1_Bold">{product.name}</Text>
         <RatingGroup value={product.rating} readOnly label={`${product.rating.toFixed(1)}`} />
       </Stack>
@@ -100,6 +100,7 @@ function BuyBox({ product }: { product: Product }) {
             onClick={() => {
               increaseQuantity(product.id, quantity);
             }}
+            disabled={quantity <= 0}
           >
             장바구니 담기
           </Button>
@@ -107,18 +108,4 @@ function BuyBox({ product }: { product: Product }) {
       })()}
     </>
   );
-}
-
-function getCategoryTagType(category: ProductCategory): TagType {
-  switch (category) {
-    case 'CHEESE':
-      return 'cheese';
-    case 'CRACKER':
-      return 'cracker';
-    case 'TEA':
-      return 'tea';
-    default:
-      category satisfies never;
-      throw new Error(`Invalid category: ${category}`);
-  }
 }
