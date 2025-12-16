@@ -1,8 +1,8 @@
 import { useCartStore } from '@/stores/useCartStore';
 import CheckoutSection from './components/CheckoutSection';
 import DeliveryMethodSection from './components/DeliveryMethodSection';
-import ShoppingCartSection from './components/ShoppingCartSection';
 import EmptyCartSection from './components/EmptyCartSection';
+import ShoppingCartSection from './components/ShoppingCartSection';
 
 function ShoppingCartPage() {
   const cart = useCartStore(state => state.cart);

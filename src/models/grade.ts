@@ -10,8 +10,14 @@ export interface GradePoint {
   minPoint: number;
 }
 
-export const SHIPPING_GRADE_TYPE = {
+export const SHIPPING_METHOD_TYPE = {
   EXPRESS: 'EXPRESS',
   PREMIUM: 'PREMIUM',
 } as const;
-export type ShippingGradeType = (typeof SHIPPING_GRADE_TYPE)[keyof typeof SHIPPING_GRADE_TYPE];
+export type ShippingMethodType = (typeof SHIPPING_METHOD_TYPE)[keyof typeof SHIPPING_METHOD_TYPE];
+
+export interface GradeShipping {
+  type: GradeType; // 'EXPLORER' | 'PILOT' | 'COMMANDER';
+  shippingFee: number; // 배송비
+  freeShippingThreshold: number; // 배송비 무료 기준 구매금액
+}
