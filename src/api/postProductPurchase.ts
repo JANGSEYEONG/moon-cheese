@@ -1,19 +1,25 @@
-import type { ShippingGradeType } from '@/models/grade';
+import type { ShippingMethodType } from '@/models/grade';
 import { http } from '@/utils/http';
+import { mutationOptions } from '@tanstack/react-query';
 
 interface PostProductPurchaseRequest {
-  deliveryType: ShippingGradeType;
+  deliveryType: ShippingMethodType;
   totalPrice: number;
   items: {
     productId: number;
     quantity: number;
   }[];
 }
-
-export function postProductPurchase({ deliveryType, totalPrice, items }: PostProductPurchaseRequest) {
+const postProductPurchase = async ({ deliveryType, totalPrice, items }: PostProductPurchaseRequest) => {
   return http.post<PostProductPurchaseRequest, null>('/api/product/purchase', {
     deliveryType,
     totalPrice,
     items,
   });
-}
+};
+
+export const postProductPurchaseMutationOptions = () =>
+  mutationOptions({
+    mutationKey: ['productPurchase'],
+    mutationFn: postProductPurchase,
+  });

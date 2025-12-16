@@ -1,11 +1,7 @@
-import type { GradeType } from '@/models/grade';
+import type { GradeShipping } from '@/models/grade';
 import { http } from '@/utils/http';
+import { queryOptions } from '@tanstack/react-query';
 
-interface GradeShipping {
-  type: GradeType; // 'EXPLORER' | 'PILOT' | 'COMMANDER';
-  shippingFee: number; // 배송비
-  freeShippingThreshold: number; // 배송비 무료 기준 구매금액
-}
 interface GetGradeShippingResponse {
   gradeShippingList: GradeShipping[];
 }
@@ -14,7 +10,8 @@ const getGradeShipping = async () => {
   return await http.get<GetGradeShippingResponse>('/api/grade/shipping');
 };
 
-export const getGradeShippingQueryOptions = () => ({
-  queryKey: ['gradeShipping'],
-  queryFn: getGradeShipping,
-});
+export const getGradeShippingQueryOptions = () =>
+  queryOptions({
+    queryKey: ['gradeShipping'],
+    queryFn: getGradeShipping,
+  });

@@ -1,4 +1,5 @@
 import { http } from '@/utils/http';
+import { queryOptions } from '@tanstack/react-query';
 
 interface GetProductRecommendRequest {
   id: number;
@@ -12,7 +13,8 @@ const getProductRecommend = async ({ id }: GetProductRecommendRequest) => {
   return await http.get<GetProductRecommendResponse>(`/api/product/recommend/${id}`);
 };
 
-export const getProductRecommendQueryOptions = ({ id }: GetProductRecommendRequest) => ({
-  queryKey: ['productRecommend', id],
-  queryFn: () => getProductRecommend({ id }),
-});
+export const getProductRecommendQueryOptions = ({ id }: GetProductRecommendRequest) =>
+  queryOptions({
+    queryKey: ['productRecommend', id],
+    queryFn: () => getProductRecommend({ id }),
+  });
