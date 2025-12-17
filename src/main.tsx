@@ -3,6 +3,7 @@ import { enableMocking } from '@/server/brower.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+import GlobalProvider from './providers/GlobalProvider';
 
 enableMocking({
   serviceWorker: {
@@ -12,7 +13,9 @@ enableMocking({
 }).then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <App />
+      <GlobalProvider>
+        <App />
+      </GlobalProvider>
     </StrictMode>
   );
 });
