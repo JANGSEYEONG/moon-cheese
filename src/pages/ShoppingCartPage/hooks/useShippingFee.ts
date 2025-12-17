@@ -1,10 +1,12 @@
 import { getGradeShippingQueryOptions } from '@/api/getGradeShipping';
 import { getMeQueryOptions } from '@/api/getMe';
-import { DELIVERY_METHOD_TYPE, type GradeShipping, type GradeType, type DeliveryMethodType } from '@/models/grade';
+import { DELIVERY_METHOD_TYPE, type DeliveryMethodType, type GradeShipping, type GradeType } from '@/models/grade';
 import { useSuspenseQueries } from '@tanstack/react-query';
-import { useCartProductsTotalPrice } from './useCartProductsTotalPrice';
 
-export function useShippingFee(): Record<DeliveryMethodType, number> {
+interface UseShippingFeeParams {
+  totalPrice: number;
+}
+export function useShippingFee({ totalPrice }: UseShippingFeeParams): Record<DeliveryMethodType, number> {
   const [
     { data: me },
     {
@@ -14,19 +16,21 @@ export function useShippingFee(): Record<DeliveryMethodType, number> {
     queries: [getMeQueryOptions(), getGradeShippingQueryOptions()],
   });
 
-  const totalPrice = useCartProductsTotalPrice();
-
   return {
-    [DELIVERY_METHOD_TYPE.EXPRESS]: getExpressShippingFee(),
-    [DELIVERY_METHOD_TYPE.PREMIUM]: getPremiumShippingFee(gradeShippingList, me.grade, totalPrice),
+    [DELIVERY_METHOD_TYPE.EXPRESS]: 0,
+    [DELIVERY_METHOD_TYPE.PREMIUM]: getPremiumShippingFee({ grade: me.grade, totalPrice, gradeShippingList }),
   };
 }
 
-function getExpressShippingFee() {
-  return 0;
-}
-
-function getPremiumShippingFee(gradeShippingList: GradeShipping[], grade: GradeType, totalPrice: number) {
+function getPremiumShippingFee({
+  grade,
+  totalPrice,
+  gradeShippingList,
+}: {
+  grade: GradeType;
+  totalPrice: number;
+  gradeShippingList: GradeShipping[];
+}) {
   const gradeShipping = gradeShippingList.find(gradeShipping => gradeShipping.type === grade);
 
   if (!gradeShipping) {

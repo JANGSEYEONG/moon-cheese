@@ -5,10 +5,11 @@ import { useCartStore } from '@/stores/useCartStore';
 import { Button, Spacing, Text } from '@/ui-lib';
 import { toast } from '@/ui-lib/components/toast';
 import { useMutation } from '@tanstack/react-query';
+import { sumBy } from 'es-toolkit';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Box, Stack, styled } from 'styled-system/jsx';
-import { useCartProductsTotalPrice } from '../hooks/useCartProductsTotalPrice';
+import { useCartProducts } from '../hooks/useCartProducts';
 import { useShippingFee } from '../hooks/useShippingFee';
 import DeliverySelect from './DeliverySelect';
 import PriceSummary from './PriceSummary';
@@ -16,15 +17,18 @@ import PriceSummary from './PriceSummary';
 function CheckoutSection() {
   const navigate = useNavigate();
 
-  const cart = useCartStore(state => state.cart);
-  const clearCart = useCartStore(state => state.clearCart);
-
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState<DeliveryMethodType>(
     DELIVERY_METHOD_TYPE.EXPRESS
   );
 
-  const shippingFee = useShippingFee()[selectedDeliveryMethod];
-  const totalPrice = useCartProductsTotalPrice();
+  const cartProducts = useCartProducts();
+  const productTotalPrice = sumBy(cartProducts, product => product.price * product.quantity);
+  const clearCart = useCartStore(state => state.clearCart);
+
+  const feeByMethod = useShippingFee({ totalPrice: productTotalPrice });
+  const currentFee = feeByMethod[selectedDeliveryMethod];
+
+  const totalPrice = productTotalPrice + (currentFee || 0);
 
   const { mutate: purchaseProducts, isPending } = useMutation({
     ...postProductPurchaseMutationOptions(),
@@ -43,7 +47,7 @@ function CheckoutSection() {
       <styled.section css={{ p: 5, bgColor: 'background.01_white' }}>
         <Text variant="H2_Bold">배송 방식</Text>
         <Spacing size={4} />
-        <DeliverySelect value={selectedDeliveryMethod} onChange={setSelectedDeliveryMethod} />
+        <DeliverySelect value={selectedDeliveryMethod} onChange={setSelectedDeliveryMethod} feeByMethod={feeByMethod} />
       </styled.section>
 
       <styled.section css={{ p: 5, bgColor: 'background.01_white' }}>
@@ -60,16 +64,19 @@ function CheckoutSection() {
         >
           <PriceSummary.Root>
             <Box gap={3}>
-              <PriceSummary.Line label={`주문금액(${cart.length}개)`} value={<PriceDisplay price={totalPrice} />} />
+              <PriceSummary.Line
+                label={`주문금액(${sumBy(cartProducts, product => product.quantity)}개)`}
+                value={<PriceDisplay price={productTotalPrice} />}
+              />
               <Spacing size={3} />
               <PriceSummary.Line
                 label="배송비"
-                value={shippingFee ? <PriceDisplay price={shippingFee} /> : '무료배송'}
-                highlight={shippingFee === 0}
+                value={currentFee ? <PriceDisplay price={currentFee} /> : '무료배송'}
+                highlight={currentFee === 0}
               />
             </Box>
             <PriceSummary.Divider />
-            <PriceSummary.Total label="총 금액" value={<PriceDisplay price={totalPrice + (shippingFee || 0)} />} />
+            <PriceSummary.Total label="총 금액" value={<PriceDisplay price={totalPrice} />} />
           </PriceSummary.Root>
 
           <Button
@@ -79,8 +86,11 @@ function CheckoutSection() {
             onClick={() => {
               purchaseProducts({
                 deliveryType: selectedDeliveryMethod,
-                totalPrice: totalPrice + (shippingFee || 0),
-                items: cart,
+                totalPrice,
+                items: cartProducts.map(product => ({
+                  productId: product.id,
+                  quantity: product.quantity,
+                })),
               });
             }}
           >

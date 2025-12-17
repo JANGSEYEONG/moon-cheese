@@ -4,23 +4,21 @@ import { DELIVERY_METHOD_TYPE } from '@/models/grade';
 import { Text } from '@/ui-lib';
 import { DeliveryIcon, RocketIcon } from '@/ui-lib/components/icons';
 import { Flex, Stack } from 'styled-system/jsx';
-import { useShippingFee } from '../hooks/useShippingFee';
 
 interface DeliverySelectProps {
   value: DeliveryMethodType;
   onChange: (value: DeliveryMethodType) => void;
+  feeByMethod: Record<DeliveryMethodType, number>;
 }
 
-function DeliverySelect({ value, onChange }: DeliverySelectProps) {
-  const shippingFee = useShippingFee();
-
+function DeliverySelect({ value, onChange, feeByMethod }: DeliverySelectProps) {
   return (
     <Stack gap={4}>
       <DeliveryOption
         title="Express"
         description="2-3일 후 도착 예정"
         icon={<DeliveryIcon size={28} />}
-        price={shippingFee[DELIVERY_METHOD_TYPE.EXPRESS]}
+        price={feeByMethod[DELIVERY_METHOD_TYPE.EXPRESS]}
         isSelected={value === DELIVERY_METHOD_TYPE.EXPRESS}
         onClick={() => onChange(DELIVERY_METHOD_TYPE.EXPRESS)}
       />
@@ -28,7 +26,7 @@ function DeliverySelect({ value, onChange }: DeliverySelectProps) {
         title="Premium"
         description="당일 배송"
         icon={<RocketIcon size={28} />}
-        price={shippingFee[DELIVERY_METHOD_TYPE.PREMIUM]}
+        price={feeByMethod[DELIVERY_METHOD_TYPE.PREMIUM]}
         isSelected={value === DELIVERY_METHOD_TYPE.PREMIUM}
         onClick={() => onChange(DELIVERY_METHOD_TYPE.PREMIUM)}
       />

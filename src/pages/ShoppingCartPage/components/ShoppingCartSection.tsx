@@ -1,28 +1,16 @@
-import { getProductListQueryOptions } from '@/api/getProductList';
 import { CartQuantityControl } from '@/components/CartQuantityControl';
 import { PriceDisplay } from '@/components/PriceDisplay';
 import { Separated } from '@/components/Separated';
 import type { Product } from '@/models/product';
 import { useCartStore } from '@/stores/useCartStore';
 import { Button, Spacing, Text } from '@/ui-lib';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { intersectionWith } from 'es-toolkit';
 import { Divider, Flex, Stack, styled } from 'styled-system/jsx';
+import { useCartProducts } from '../hooks/useCartProducts';
 import ShoppingCartItem from './ShoppingCartItem';
 
 function ShoppingCartSection() {
-  const {
-    data: { products },
-  } = useSuspenseQuery(getProductListQueryOptions());
-
-  const { cart, clearCart } = useCartStore();
-
-  const cartProductIds = cart.map(item => item.productId);
-  const cartProducts = intersectionWith(
-    products,
-    cartProductIds,
-    (product, cartProductId) => product.id === cartProductId
-  );
+  const cartProducts = useCartProducts();
+  const clearCart = useCartStore(state => state.clearCart);
 
   return (
     <styled.section css={{ p: 5, bgColor: 'background.01_white' }}>
