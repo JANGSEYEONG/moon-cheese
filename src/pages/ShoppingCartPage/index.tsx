@@ -1,6 +1,5 @@
 import { useCartStore } from '@/stores/useCartStore';
 import CheckoutSection from './components/CheckoutSection';
-import DeliveryMethodSection from './components/DeliveryMethodSection';
 import EmptyCartSection from './components/EmptyCartSection';
 import ShoppingCartSection from './components/ShoppingCartSection';
 
@@ -14,7 +13,6 @@ function ShoppingCartPage() {
   return (
     <>
       <ShoppingCartSection />
-      <DeliveryMethodSection />
       <CheckoutSection />
     </>
   );
