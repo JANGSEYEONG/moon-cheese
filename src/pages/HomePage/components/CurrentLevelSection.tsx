@@ -45,13 +45,13 @@ function CurrentLevelSection() {
             <Box textAlign="left">
               <Text variant="C1_Bold">현재 포인트</Text>
               <Text variant="C2_Regular" color="neutral.03_gray">
-                {me.point}p
+                {me.point.toFixed(1)}p
               </Text>
             </Box>
             <Box textAlign="right">
               <Text variant="C1_Bold">다음 등급까지</Text>
               <Text variant="C2_Regular" color="neutral.03_gray">
-                {leftPointToNextGrade}p
+                {leftPointToNextGrade.toFixed(1)}p
               </Text>
             </Box>
           </Flex>
