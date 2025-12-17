@@ -1,14 +1,14 @@
 import { PriceDisplay } from '@/components/PriceDisplay';
-import type { ShippingMethodType } from '@/models/grade';
-import { SHIPPING_METHOD_TYPE } from '@/models/grade';
+import type { DeliveryMethodType } from '@/models/grade';
+import { DELIVERY_METHOD_TYPE } from '@/models/grade';
 import { Text } from '@/ui-lib';
 import { DeliveryIcon, RocketIcon } from '@/ui-lib/components/icons';
 import { Flex, Stack } from 'styled-system/jsx';
 import { useShippingFee } from '../hooks/useShippingFee';
 
 interface DeliverySelectProps {
-  value: ShippingMethodType;
-  onChange: (value: ShippingMethodType) => void;
+  value: DeliveryMethodType;
+  onChange: (value: DeliveryMethodType) => void;
 }
 
 function DeliverySelect({ value, onChange }: DeliverySelectProps) {
@@ -20,17 +20,17 @@ function DeliverySelect({ value, onChange }: DeliverySelectProps) {
         title="Express"
         description="2-3일 후 도착 예정"
         icon={<DeliveryIcon size={28} />}
-        price={shippingFee[SHIPPING_METHOD_TYPE.EXPRESS]}
-        isSelected={value === SHIPPING_METHOD_TYPE.EXPRESS}
-        onClick={() => onChange(SHIPPING_METHOD_TYPE.EXPRESS)}
+        price={shippingFee[DELIVERY_METHOD_TYPE.EXPRESS]}
+        isSelected={value === DELIVERY_METHOD_TYPE.EXPRESS}
+        onClick={() => onChange(DELIVERY_METHOD_TYPE.EXPRESS)}
       />
       <DeliveryOption
         title="Premium"
         description="당일 배송"
         icon={<RocketIcon size={28} />}
-        price={shippingFee[SHIPPING_METHOD_TYPE.PREMIUM]}
-        isSelected={value === SHIPPING_METHOD_TYPE.PREMIUM}
-        onClick={() => onChange(SHIPPING_METHOD_TYPE.PREMIUM)}
+        price={shippingFee[DELIVERY_METHOD_TYPE.PREMIUM]}
+        isSelected={value === DELIVERY_METHOD_TYPE.PREMIUM}
+        onClick={() => onChange(DELIVERY_METHOD_TYPE.PREMIUM)}
       />
     </Stack>
   );

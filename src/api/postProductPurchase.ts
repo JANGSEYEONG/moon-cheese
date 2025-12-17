@@ -1,9 +1,9 @@
-import type { ShippingMethodType } from '@/models/grade';
+import type { DeliveryMethodType } from '@/models/grade';
 import { http } from '@/utils/http';
 import { mutationOptions } from '@tanstack/react-query';
 
 interface PostProductPurchaseRequest {
-  deliveryType: ShippingMethodType;
+  deliveryType: DeliveryMethodType;
   totalPrice: number;
   items: {
     productId: number;

@@ -1,6 +1,6 @@
 import { postProductPurchaseMutationOptions } from '@/api/postProductPurchase';
 import { PriceDisplay } from '@/components/PriceDisplay';
-import { SHIPPING_METHOD_TYPE, type ShippingMethodType } from '@/models/grade';
+import { DELIVERY_METHOD_TYPE, type DeliveryMethodType } from '@/models/grade';
 import { useCartStore } from '@/stores/useCartStore';
 import { Button, Spacing, Text } from '@/ui-lib';
 import { toast } from '@/ui-lib/components/toast';
@@ -18,8 +18,8 @@ function CheckoutSection() {
   const cart = useCartStore(state => state.cart);
   const clearCart = useCartStore(state => state.clearCart);
 
-  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState<ShippingMethodType>(
-    SHIPPING_METHOD_TYPE.EXPRESS
+  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState<DeliveryMethodType>(
+    DELIVERY_METHOD_TYPE.EXPRESS
   );
 
   const shippingFee = useShippingFee()[selectedDeliveryMethod];

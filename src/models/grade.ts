@@ -10,11 +10,11 @@ export interface GradePoint {
   minPoint: number;
 }
 
-export const SHIPPING_METHOD_TYPE = {
+export const DELIVERY_METHOD_TYPE = {
   EXPRESS: 'EXPRESS',
   PREMIUM: 'PREMIUM',
 } as const;
-export type ShippingMethodType = (typeof SHIPPING_METHOD_TYPE)[keyof typeof SHIPPING_METHOD_TYPE];
+export type DeliveryMethodType = (typeof DELIVERY_METHOD_TYPE)[keyof typeof DELIVERY_METHOD_TYPE];
 
 export interface GradeShipping {
   type: GradeType; // 'EXPLORER' | 'PILOT' | 'COMMANDER';
