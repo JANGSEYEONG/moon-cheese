@@ -7,10 +7,11 @@ import { toast } from '@/ui-lib/components/toast';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Box, Divider, Flex, HStack, Stack, styled } from 'styled-system/jsx';
+import { Box, Stack, styled } from 'styled-system/jsx';
 import { useCartProductsTotalPrice } from '../hooks/useCartProductsTotalPrice';
 import { useShippingFee } from '../hooks/useShippingFee';
 import DeliverySelect from './DeliverySelect';
+import PriceSummary from './PriceSummary';
 
 function CheckoutSection() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ function CheckoutSection() {
         <Spacing size={4} />
         <DeliverySelect value={selectedDeliveryMethod} onChange={setSelectedDeliveryMethod} />
       </styled.section>
+
       <styled.section css={{ p: 5, bgColor: 'background.01_white' }}>
         <Text variant="H2_Bold">결제금액</Text>
         <Spacing size={4} />
@@ -56,30 +58,19 @@ function CheckoutSection() {
             rounded: '2xl',
           }}
         >
-          <Stack gap={5}>
+          <PriceSummary.Root>
             <Box gap={3}>
-              <Flex justify="space-between">
-                <Text variant="B2_Regular">주문금액({cart.length}개)</Text>
-                <Text variant="B2_Bold" color="state.green">
-                  {shippingFee ? '무료배송' : '유료배송'}
-                </Text>
-              </Flex>
+              <PriceSummary.Line label={`주문금액(${cart.length}개)`} value={<PriceDisplay price={totalPrice} />} />
               <Spacing size={3} />
-              <Flex justify="space-between">
-                <Text variant="B2_Regular">배송비</Text>
-                <Text variant="B2_Bold">{shippingFee ? <PriceDisplay price={shippingFee} /> : '무료'}</Text>
-              </Flex>
+              <PriceSummary.Line
+                label="배송비"
+                value={shippingFee ? <PriceDisplay price={shippingFee} /> : '무료배송'}
+                highlight={shippingFee === 0}
+              />
             </Box>
-
-            <Divider color="border.01_gray" />
-
-            <HStack justify="space-between">
-              <Text variant="H2_Bold">총 금액</Text>
-              <Text variant="H2_Bold">
-                <PriceDisplay price={totalPrice + (shippingFee || 0)} />
-              </Text>
-            </HStack>
-          </Stack>
+            <PriceSummary.Divider />
+            <PriceSummary.Total label="총 금액" value={<PriceDisplay price={totalPrice + (shippingFee || 0)} />} />
+          </PriceSummary.Root>
 
           <Button
             fullWidth
